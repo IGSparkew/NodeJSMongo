@@ -2,8 +2,9 @@
 
 ## How to start project
 
-- First do ``` npm build ``` 
-- Finally do ``` npm start ```
+- ``` npm install ```
+- ``` npm build ``` 
+- ``` npm start ```
 
 ## Routes: 
 
