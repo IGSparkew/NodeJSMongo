@@ -1,4 +1,4 @@
-### Express Typescript Api
+# Express Typescript Api
 
 ## How to start project
 
