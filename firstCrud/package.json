@@ -1,0 +1,28 @@
+{
+  "name": "firstcrud",
+  "version": "1.0.0",
+  "description": "first crud",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IGSparkew/NodeJSMongo.git"
+  },
+  "keywords": [
+    "node",
+    "js",
+    "api",
+    "mongo",
+    "db",
+    "express",
+    "js"
+  ],
+  "author": "IGSparkew, MartinC",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IGSparkew/NodeJSMongo/issues"
+  },
+  "homepage": "https://github.com/IGSparkew/NodeJSMongo#readme"
+}
