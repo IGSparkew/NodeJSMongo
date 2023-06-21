@@ -30,7 +30,5 @@ const animeSchema: Schema = new Schema<IAnime>({
     dropped: {type: Number, required: false}
 });
 
-mongoose.set("debug", true);
-
 export const Anime: Model<IAnime> = model<IAnime>('animes',animeSchema);
 

@@ -10,7 +10,6 @@ export class AnimeService {
         const results:IAnime[] = []
         try {
             const query = await Anime.find();
-            console.log(query);
             if (query.length > 0) {
                 query.forEach((q)=> {
                     results.push(q);
@@ -29,16 +28,14 @@ export class AnimeService {
 
         const results: IGender[] = [];
         try {
-        const query = await Anime.distinct('genres').exec();
-        console.log(query);
+        const query = await Anime.distinct('genres');
         if (query != null) {
-            for(let r in query) {
+            for(let r of query) {
                 results.push({
                     gender: r
                 });
             }
         }   
-
         } catch (error) {
             console.log("Error on get genders");
         }

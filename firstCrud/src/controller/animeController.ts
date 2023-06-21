@@ -38,8 +38,14 @@ export class AnimeController {
 
     public async getGender(req:Request, res:Response) {
         const animeService: AnimeService = new AnimeService();
-        const results = await animeService.getGenders();
-        console.log(results);
+        let results = []; 
+        results = await animeService.getGenders();
+        if (results.length > 0) {
+            res.status(200).json(results);
+            return;
+        }
+        
+        res.status(403).json({message: "Error on get genders"});
 
         // try {
          
