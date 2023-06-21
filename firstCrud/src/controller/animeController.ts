@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { AnimeService } from "../service/animeService";
 import { IAnime } from "../model/anime.types";
+import { GenderDTO, IGenderDTO } from "../dto/genderDTO";
 
 export class AnimeController {
 
@@ -38,20 +39,14 @@ export class AnimeController {
 
     public async getGender(req:Request, res:Response) {
         const animeService: AnimeService = new AnimeService();
-        let results = []; 
+        let results: IGenderDTO = GenderDTO.default();
+
         results = await animeService.getGenders();
-        if (results.length > 0) {
-            res.status(200).json(results);
+        if (results.genres.length > 0) {
+            res.status(200).json({nbResponse:results.genres.length,response:results});
             return;
         }
         
         res.status(403).json({message: "Error on get genders"});
-
-        // try {
-         
-        //     res.status(200).json({result: results});
-        // } catch (error) {
-        //     res.status(403).json({error: 'genders not found !'})
-        // }
     }
 }

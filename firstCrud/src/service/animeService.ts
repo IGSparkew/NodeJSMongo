@@ -1,6 +1,6 @@
 import { connectionToDb } from "../config/db";
 import { Anime } from "../model/animeModel";
-import { IGender } from "../dto/genderDTO";
+import { GenderDTO, IGenderDTO } from "../dto/genderDTO";
 import { IAnime } from "../model/anime.types";
 
 export class AnimeService {
@@ -23,24 +23,31 @@ export class AnimeService {
     }
 
 
-    public async getGenders(): Promise<IGender[]> {
+    public async getGenders(): Promise<IGenderDTO> {
         await connectionToDb();
 
-        const results: IGender[] = [];
+        let results: IGenderDTO = GenderDTO.default();
+
         try {
         const query = await Anime.distinct('genres');
         if (query != null) {
-            for(let r of query) {
-                results.push({
-                    genres: r
-                });
-            }
+            results = new GenderDTO(this.filteredString(query));
         }   
         } catch (error) {
             console.log("Error on get genders");
         }
 
         return results;
+    }
+
+    private filteredString(query: any[]): string[] {
+        const filteredQuery: Set<string> = new Set();
+        query.forEach((q)=> {
+            const splitedGenres: String[] = q.split(', ');
+            splitedGenres.forEach((s) => filteredQuery.add(s as string));
+        });
+
+        return [...filteredQuery];
     }
 
 }
