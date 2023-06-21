@@ -1,6 +1,9 @@
 import { Request, Response, NextFunction } from "express";
+import { AnimeService } from "../service/animeService";
 
 export class AnimeController {
+
+    private animeService: AnimeService = new AnimeService();
 
     public getAnimes(req:Request, res:Response, next:NextFunction) {
         res.send('get all the animes');
@@ -24,5 +27,17 @@ export class AnimeController {
 
     public deleteAnime(req:Request, res:Response, next:NextFunction) {
         res.send('delete an anime');
+    }
+
+    public async getGender(req:Request, res:Response, next:NextFunction) {
+        const results = await this.animeService.getGenders();
+        console.log(results);
+
+        // try {
+         
+        //     res.status(200).json({result: results});
+        // } catch (error) {
+        //     res.status(403).json({error: 'genders not found !'})
+        // }
     }
 }
