@@ -1,4 +1,4 @@
-import { Model, Schema, model } from "mongoose";
+import mongoose, { Model, Schema, model } from "mongoose";
 import { IAnime } from "./anime.types";
 
 const animeSchema: Schema = new Schema<IAnime>({
@@ -30,5 +30,7 @@ const animeSchema: Schema = new Schema<IAnime>({
     dropped: {type: Number, required: false}
 });
 
-export const Anime: Model<IAnime> = model<IAnime>('anime',animeSchema);
+mongoose.set("debug", true);
+
+export const Anime: Model<IAnime> = model<IAnime>('animes',animeSchema);
 

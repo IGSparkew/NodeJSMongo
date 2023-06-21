@@ -1,12 +1,19 @@
 import { Request, Response, NextFunction } from "express";
 import { AnimeService } from "../service/animeService";
+import { IAnime } from "../model/anime.types";
 
 export class AnimeController {
 
-    private animeService: AnimeService = new AnimeService();
 
-    public getAnimes(req:Request, res:Response, next:NextFunction) {
-        res.send('get all the animes');
+    public async getAnimes(req:Request, res:Response, next:NextFunction) {
+        const animeService: AnimeService = new AnimeService();
+        let result:IAnime[] = [];
+        result = await animeService.findAll();
+        if (result.length > 0) {
+            res.status(200).json(result);
+            return;
+        }
+        res.status(403).json({message: "Error on found Animes"});
     }
 
     public getAnime(req:Request, res:Response, next:NextFunction) {
@@ -29,8 +36,9 @@ export class AnimeController {
         res.send('delete an anime');
     }
 
-    public async getGender(req:Request, res:Response, next:NextFunction) {
-        const results = await this.animeService.getGenders();
+    public async getGender(req:Request, res:Response) {
+        const animeService: AnimeService = new AnimeService();
+        const results = await animeService.getGenders();
         console.log(results);
 
         // try {
