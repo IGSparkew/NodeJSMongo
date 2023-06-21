@@ -1,3 +1,3 @@
 export interface IGender {
-    gender: string
+    genres: string
 }

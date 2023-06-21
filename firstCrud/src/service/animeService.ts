@@ -32,7 +32,7 @@ export class AnimeService {
         if (query != null) {
             for(let r of query) {
                 results.push({
-                    gender: r
+                    genres: r
                 });
             }
         }   
