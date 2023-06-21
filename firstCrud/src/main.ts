@@ -1,6 +1,8 @@
 import express, { Express, Request, Response } from "express";
+import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { router } from "./router/router.js";
+import { connectionToDb } from "./config/db.js";
 
 dotenv.config();
 
