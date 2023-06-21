@@ -14,7 +14,7 @@ app.get('/', (req: Request, res: Response) => {
     res.send("Express work in typeScript");
 });
 
-app.use('/books', router)
+app.use('/api/v1', router)
 
 app.listen(port, () => {
     console.log(`First CRUD API run on port : ${port}`);
