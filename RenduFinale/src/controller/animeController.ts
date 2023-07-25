@@ -14,15 +14,25 @@ export class AnimeController {
             res.status(200).json(result);
             return;
         }
-        res.status(403).json({message: "Error on found Animes"});
+        res.status(403).json({error: "Error on found Animes"});
     }
 
-    public getAnime(req:Request, res:Response, next:NextFunction) {
-        res.send('get an anime');
+    public async getAnime(req:Request, res:Response, next:NextFunction) {
+       try {
+        const result = await animeService.findOneByObjectId(req.body.id);
+        res.status(200).json({result: result});
+       } catch (err) {
+            res.status(403).json({error: "Anime not found "})
+       }
     }
 
-    public postAnime(req:Request, res:Response, next:NextFunction) {
-        res.send('post an anime');
+    public async postAnime(req:Request, res:Response, next:NextFunction) {
+        try {
+            const result = await animeService.createAnim(req.body);
+            res.status(200).json({result: result});
+           } catch (err) {
+                res.status(403).json({error: "can't create anime "})
+           }
     }
 
     public patchAnime(req:Request, res:Response, next:NextFunction) {
