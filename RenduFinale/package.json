@@ -7,7 +7,8 @@
     "build": "npx tsc",
     "start": "node dist/main.js",
     "test": "jest",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/main.js\""
+    "dev:test": "npm run test && npm run build && npm run start --watch",
+    "dev:build": "npm run build && npm run start --watch"
   },
   "repository": {
     "type": "git",
