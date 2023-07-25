@@ -1,19 +1,25 @@
 import express from 'express';
-import {AnimeController} from '../controller/animeController';
+import { AnimeController } from '../controller/animeController';
 import { UserController } from '../controller/userController';
 import { handleErrorValidation, validation } from '../middleware/userInputMiddleware';
-const userRouter = express.Router();
 
-const userController:UserController = new UserController();
+const userRouter = express.Router();
+const userController = new UserController();
+
+/**
+ * @swagger
+ * tags:
+ *   name: Security
+ *   description: API for user authentication and registration
+ */
 
 /**
  * @swagger
  * /api/v1/login:
- *   get:
+ *   post:
  *     summary: Try to login
  *     tags: [Security]
- *     parameters:
- *       requestBody:
+ *     requestBody:
  *       description: User to connect
  *       required: true
  *       content:
@@ -31,11 +37,10 @@ userRouter.post('/login', validation, handleErrorValidation, userController.logi
 /**
  * @swagger
  * /api/v1/register:
- *   get:
+ *   post:
  *     summary: Try to register
  *     tags: [Security]
- *     parameters:
- *       requestBody:
+ *     requestBody:
  *       description: User to insert
  *       required: true
  *       content:
@@ -50,7 +55,4 @@ userRouter.post('/login', validation, handleErrorValidation, userController.logi
  */
 userRouter.post('/register', validation, handleErrorValidation, userController.register);
 
-
-
-export {userRouter}
-
+export { userRouter };

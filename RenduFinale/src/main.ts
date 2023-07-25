@@ -29,8 +29,8 @@ const options = {
         },
         servers: [
             {
-                url: "http://localhost:3000/api/v1/",
-            },0
+                url: "http://localhost:3000/",
+            },
         ],
         components: {
             schemas: {
@@ -186,7 +186,6 @@ const options = {
                             nullable: true,
                         },
                     },
-                    required: ["name"],
                 },
             },
         },

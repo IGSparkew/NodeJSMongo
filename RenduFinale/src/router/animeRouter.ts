@@ -1,9 +1,9 @@
 import express from 'express';
 import { AnimeController } from '../controller/animeController';
 import { handleUserValidation } from '../middleware/securityMiddleware';
-const animRouter = express.Router();
 
-const animeController: AnimeController = new AnimeController();
+const animRouter = express.Router();
+const animeController = new AnimeController();
 
 /**
  * @swagger
@@ -15,12 +15,11 @@ const animeController: AnimeController = new AnimeController();
 /**
  * @swagger
  * components:
- *  securitySchemes:
- *   BearerAuth:
- *     type: http
- *     scheme: bearer
- *     bearerFormat: JWT 
- *
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT 
  */
 
 /**
@@ -37,7 +36,7 @@ animRouter.get("/animes", handleUserValidation, animeController.getAnimes);
 
 /**
  * @swagger
- * /api/v1/animes/{name}:
+ * /api/v1/animes/{id}:
  *   get:
  *     summary: Get an anime by name
  *     tags: [Animes]
@@ -49,14 +48,36 @@ animRouter.get("/animes", handleUserValidation, animeController.getAnimes);
  *         required: true
  *         description: Name of the anime
  *     security:
- *         BearerAuth: []
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: Returns a single anime object
  *       404:
  *         description: Anime not found
  */
-animRouter.get("/animes/:name", handleUserValidation, animeController.getAnime);
+
+/**
+ * @swagger
+ * /api/v1/animes/search/{name}:
+ *   post:
+ *     summary: Search Anime by name 
+ *     tags: [Animes]
+ *     requestBody:
+ *       description: Anime object to be created
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/Anime"
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       201:
+ *         description: search successfully
+ *       400:
+ *         description: Bad request
+ */
+animRouter.get("/animes/search/:name", handleUserValidation, animeController.searchAnime);
 
 /**
  * @swagger
@@ -72,7 +93,7 @@ animRouter.get("/animes/:name", handleUserValidation, animeController.getAnime);
  *           schema:
  *             $ref: "#/components/schemas/Anime"
  *     security:
- *         BearerAuth: []
+ *       - BearerAuth: []
  *     responses:
  *       201:
  *         description: Created successfully
@@ -83,17 +104,17 @@ animRouter.post("/animes", handleUserValidation, animeController.postAnime);
 
 /**
  * @swagger
- * /api/v1/animes/{name}:
+ * /api/v1/animes/{id}:
  *   patch:
  *     summary: Update an existing anime partially
  *     tags: [Animes]
  *     parameters:
  *       - in: path
- *         name: name
+ *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: Name of the anime
+ *         description: Id of the anime
  *     requestBody:
  *       description: Anime object to be updated
  *       required: true
@@ -102,7 +123,7 @@ animRouter.post("/animes", handleUserValidation, animeController.postAnime);
  *           schema:
  *             $ref: "#/components/schemas/Anime"
  *     security:
- *         BearerAuth: []
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: Updated successfully
@@ -111,21 +132,21 @@ animRouter.post("/animes", handleUserValidation, animeController.postAnime);
  *       404:
  *         description: Anime not found
  */
-animRouter.patch("/animes/:name", handleUserValidation, animeController.patchAnime);
+animRouter.patch("/animes/:id", handleUserValidation, animeController.patchAnime);
 
 /**
  * @swagger
- * /api/v1/animes/{name}:
+ * /api/v1/animes/{id}:
  *   put:
  *     summary: Update an existing anime completely
  *     tags: [Animes]
  *     parameters:
  *       - in: path
- *         name: name
+ *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: Name of the anime
+ *         description: Id of the anime
  *     requestBody:
  *       description: Anime object to be updated
  *       required: true
@@ -134,7 +155,7 @@ animRouter.patch("/animes/:name", handleUserValidation, animeController.patchAni
  *           schema:
  *             $ref: "#/components/schemas/Anime"
  *     security:
- *         BearerAuth: []
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: Updated successfully
@@ -143,30 +164,30 @@ animRouter.patch("/animes/:name", handleUserValidation, animeController.patchAni
  *       404:
  *         description: Anime not found
  */
-animRouter.put("/animes/:name", handleUserValidation, animeController.putAnime);
+animRouter.put("/animes/:id", handleUserValidation, animeController.putAnime);
 
 /**
  * @swagger
- * /api/v1/animes/{name}:
+ * /api/v1/animes/{id}:
  *   delete:
- *     summary: Delete an anime by name
+ *     summary: Delete an anime by id
  *     tags: [Animes]
  *     parameters:
  *       - in: path
- *         name: name
+ *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: Name of the anime
+ *         description: id of the anime
  *     security:
- *         BearerAuth: []
+ *       - BearerAuth: []
  *     responses:
  *       204:
  *         description: Deleted successfully
  *       404:
  *         description: Anime not found
  */
-animRouter.delete("/animes/:name", handleUserValidation, animeController.deleteAnime);
+animRouter.delete("/animes/:id", handleUserValidation, animeController.deleteAnime);
 
 /**
  * @swagger
@@ -175,7 +196,7 @@ animRouter.delete("/animes/:name", handleUserValidation, animeController.deleteA
  *     summary: Get all genders
  *     tags: [Animes]
  *     security:
- *         BearerAuth: []
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: Returns an array of genders
