@@ -19,7 +19,7 @@ export class AnimeController {
 
     public async getAnime(req:Request, res:Response, next:NextFunction) {
        try {
-        const result = await animeService.findOneByObjectId(req.body.id);
+        const result = await animeService.findOneByObjectId(req.params.id);
         res.status(200).json({result: result});
        } catch (err) {
             res.status(403).json({error: "Anime not found "})
@@ -45,6 +45,15 @@ export class AnimeController {
 
     public deleteAnime(req:Request, res:Response, next:NextFunction) {
         res.send('delete an anime');
+    }
+
+    public async searchAnime(req:Request, res:Response, next:NextFunction) { 
+        try {
+            const result = await animeService.searchAnim(req.params.name);
+            res.status(200).json({result: result});
+        } catch (err) {
+            res.status(403).json({error: "Error when search anime with name"});
+        }
     }
 
     public async getGender(req:Request, res:Response) {

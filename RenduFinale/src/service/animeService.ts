@@ -38,6 +38,9 @@ export class AnimeService {
 
                 return result;
             } catch(err) {
+                if (err instanceof Error) {
+                    console.error(err.message);
+                }
                 throw new Error("");
             }
     }
@@ -56,6 +59,21 @@ export class AnimeService {
             throw new Error("");
         }
 
+    }
+
+    public async searchAnim(name: string): Promise<IAnime[]> {
+        try {
+            await connectionToDb();
+            let result = []
+            result = await Anime.find({name: {$regex: name}});
+            return result;
+        } catch (err) {
+            console.log(err);
+            if (err instanceof Error) {
+                console.error(err.message);
+            }
+            throw new Error("");
+        }
     }
 
 
