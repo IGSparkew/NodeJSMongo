@@ -6,6 +6,7 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/main.js",
+    "test": "jest",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/main.js\""
   },
   "repository": {
