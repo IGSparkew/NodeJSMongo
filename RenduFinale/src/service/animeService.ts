@@ -3,6 +3,7 @@ import { Anime } from "../model/animeModel";
 import { GenderDTO, IGenderDTO } from "../dto/genderDTO";
 import { IAnime } from "../model/anime.types";
 import { ListUtils } from "../utils/listUtils";
+import { Error } from "mongoose";
 
 export class AnimeService {
 
@@ -21,6 +22,58 @@ export class AnimeService {
         }
 
         return results;
+    }
+
+    public async findOneByObjectId(id:string):Promise<IAnime> {
+            try {
+                await connectionToDb();
+
+                if(!id) {
+                    throw new Error("");
+                }
+                const result = await Anime.findById(id);
+                if (!result) {
+                    throw new Error("");
+                }
+
+                return result;
+            } catch(err) {
+                if (err instanceof Error) {
+                    console.error(err.message);
+                }
+                throw new Error("");
+            }
+    }
+
+    public async createAnim(input: IAnime): Promise<IAnime> {
+        try {
+            await connectionToDb();
+
+            const animeTocreate = await new Anime(input).save();
+
+            return await animeTocreate;
+        } catch(err) {
+            if (err instanceof Error) {
+                console.error(err.message);
+            }
+            throw new Error("");
+        }
+
+    }
+
+    public async searchAnim(name: string): Promise<IAnime[]> {
+        try {
+            await connectionToDb();
+            let result = []
+            result = await Anime.find({name: {$regex: name}});
+            return result;
+        } catch (err) {
+            console.log(err);
+            if (err instanceof Error) {
+                console.error(err.message);
+            }
+            throw new Error("");
+        }
     }
 
 
