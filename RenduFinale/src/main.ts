@@ -1,7 +1,8 @@
 import express, { Express, Request, Response } from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { router } from "./router/router.js";
+import { animRouter } from "./router/animeRouter.js";
+import { userRouter } from "./router/userRouter.js";
 
 dotenv.config();
 
@@ -14,7 +15,9 @@ app.get('/', (req: Request, res: Response) => {
     res.send("Express work in typeScript");
 });
 
-app.use('/api/v1', router)
+app.use('/api/v1', animRouter);
+app.use('/api/v1', userRouter);
+
 
 
 app.listen(port, () => {
