@@ -1,5 +1,4 @@
 export interface IAnime {
-    _id: string,
     anim_id: number,
     name: string,
     score: number,

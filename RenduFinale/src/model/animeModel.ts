@@ -2,7 +2,6 @@ import mongoose, { Model, Schema, model } from "mongoose";
 import { IAnime } from "./anime.types";
 
 const animeSchema: Schema = new Schema<IAnime>({
-    _id: {type: String, required: false},
     anim_id: {type: Number, required: false },
     name: {type: String, required: true},
     score: {type: Number, required: false},

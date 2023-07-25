@@ -2,12 +2,12 @@ import { Request, Response, NextFunction } from "express";
 import { AnimeService } from "../service/animeService";
 import { IAnime } from "../model/anime.types";
 import { GenderDTO, IGenderDTO } from "../dto/genderDTO";
+import { animeService } from "../config/configBean";
 
 export class AnimeController {
 
 
     public async getAnimes(req:Request, res:Response, next:NextFunction) {
-        const animeService: AnimeService = new AnimeService();
         let result:IAnime[] = [];
         result = await animeService.findAll();
         if (result.length > 0) {
