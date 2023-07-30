@@ -14,16 +14,6 @@ const animeController = new AnimeController();
 
 /**
  * @swagger
- * components:
- *   securitySchemes:
- *     BearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT 
- */
-
-/**
- * @swagger
  * /api/v1/animes:
  *   get:
  *     summary: Get all animes

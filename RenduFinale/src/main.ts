@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express, Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { animRouter } from "./router/animeRouter";
@@ -6,6 +6,7 @@ import { userRouter } from "./router/userRouter";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import bodyParser from "body-parser";
+import logger from "./middleware/logger";
 
 dotenv.config();
 
@@ -14,9 +15,18 @@ const port = process.env.PORT;
 
 app.use(express.json());
 
+app.use((err: CustomError, req: Request, res: Response, next: NextFunction): void => {
+    logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+    res.status(err.status || 500).send('Erreur ! Consulte les logs pour plus d\'informations.');
+});
+
 app.get('/', (req: Request, res: Response) => {
     res.send("Express work in TypeScript");
 });
+
+interface CustomError extends Error {
+    status?: number;
+}
 
 // Swagger documentation options
 const options = {
@@ -33,6 +43,14 @@ const options = {
             },
         ],
         components: {
+            securitySchemes: {
+                Authorization: {
+                    type: "http",
+                    scheme: "bearer",
+                    bearerFormat: "JWT",
+                    value: "Bearer <JWT token here>"
+                }
+            },
             schemas: {
                 User: {
                     type: "object",
@@ -205,5 +223,5 @@ app.use('/api/v1', animRouter);
 app.use('/api/v1', userRouter);
 
 app.listen(port, () => {
-    console.log(`First CRUD API running on port: ${port}`);
+    logger.info(`Serveur démarré sur le port ${port}.`);
 });
