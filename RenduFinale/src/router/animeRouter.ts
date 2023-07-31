@@ -18,33 +18,13 @@ const animeController = new AnimeController();
  *   get:
  *     summary: Get all animes
  *     tags: [Animes]
+ *     security:
+ *      - Authorization: []
  *     responses:
  *       200:
  *         description: Returns an array of animes
  */
 animRouter.get("/animes", handleUserValidation, animeController.getAnimes);
-
-/**
- * @swagger
- * /api/v1/animes/{id}:
- *   get:
- *     summary: Get an anime by name
- *     tags: [Animes]
- *     parameters:
- *       - in: path
- *         name: name
- *         schema:
- *           type: string
- *         required: true
- *         description: Name of the anime
- *     security:
- *       - BearerAuth: []
- *     responses:
- *       200:
- *         description: Returns a single anime object
- *       404:
- *         description: Anime not found
- */
 
 /**
  * @swagger
@@ -60,7 +40,7 @@ animRouter.get("/animes", handleUserValidation, animeController.getAnimes);
  *           schema:
  *             $ref: "#/components/schemas/Anime"
  *     security:
- *       - BearerAuth: []
+ *       - Authorization: []
  *     responses:
  *       201:
  *         description: search successfully
@@ -83,7 +63,7 @@ animRouter.get("/animes/search/:name", handleUserValidation, animeController.sea
  *           schema:
  *             $ref: "#/components/schemas/Anime"
  *     security:
- *       - BearerAuth: []
+ *       - Authorization: []
  *     responses:
  *       201:
  *         description: Created successfully
@@ -113,7 +93,7 @@ animRouter.post("/animes", handleUserValidation, animeController.postAnime);
  *           schema:
  *             $ref: "#/components/schemas/Anime"
  *     security:
- *       - BearerAuth: []
+ *       - Authorization: []
  *     responses:
  *       200:
  *         description: Updated successfully
@@ -145,7 +125,7 @@ animRouter.patch("/animes/:id", handleUserValidation, animeController.patchAnime
  *           schema:
  *             $ref: "#/components/schemas/Anime"
  *     security:
- *       - BearerAuth: []
+ *       - Authorization: []
  *     responses:
  *       200:
  *         description: Updated successfully
@@ -170,7 +150,7 @@ animRouter.put("/animes/:id", handleUserValidation, animeController.putAnime);
  *         required: true
  *         description: id of the anime
  *     security:
- *       - BearerAuth: []
+ *       - Authorization: []
  *     responses:
  *       204:
  *         description: Deleted successfully
@@ -186,7 +166,7 @@ animRouter.delete("/animes/:id", handleUserValidation, animeController.deleteAni
  *     summary: Get all genders
  *     tags: [Animes]
  *     security:
- *       - BearerAuth: []
+ *       - Authorization: []
  *     responses:
  *       200:
  *         description: Returns an array of genders
