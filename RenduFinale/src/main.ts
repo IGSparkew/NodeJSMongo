@@ -36,7 +36,12 @@ const specs = swaggerJSDoc(options);
 app.use(
     "/api/v1/docs",
     swaggerUi.serve,
-    swaggerUi.setup(specs)
+    swaggerUi.setup(specs,{
+        swaggerOptions: {
+           docExpansions: "none",
+           persistAuthorization: true
+        }
+    })
 );
 app.use(bodyParser.json());
 // Add your routes here

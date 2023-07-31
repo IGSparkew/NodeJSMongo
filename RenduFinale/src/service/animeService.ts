@@ -11,7 +11,7 @@ export class AnimeService {
         await connectionToDb();
         const results: IAnime[] = []
         try {
-            const query = await Anime.find();
+            const query = await Anime.find().limit(Number(process.env.limit_find) || 10);
             if (query.length > 0) {
                 query.forEach((q) => {
                     results.push(q);
@@ -65,7 +65,7 @@ export class AnimeService {
         try {
             await connectionToDb();
             let result = []
-            result = await Anime.find({ name: { $regex: name } });
+            result = await Anime.find({ name: { $regex: name } }).limit(Number(process.env.limit_find) || 10);
             return result;
         } catch (err) {
             console.log(err);
