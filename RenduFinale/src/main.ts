@@ -8,11 +8,13 @@ import swaggerUi from "swagger-ui-express";
 import bodyParser from "body-parser";
 import logger from "./middleware/logger";
 import * as swaggers_option from "./swagger.json";
+import { AnimeService } from "./service/animeService";
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT;
+const initData = process.env.initialise_data || false;
 
 app.use(express.json());
 
@@ -48,6 +50,10 @@ app.use(bodyParser.json());
 app.use('/api/v1', animRouter);
 app.use('/api/v1', userRouter);
 
-app.listen(port, () => {
+app.listen(port, async () => {
     logger.info(`Serveur démarré sur le port ${port}.`);
+    if (initData) {
+        await AnimeService.initAnim();
+    }
+    
 });

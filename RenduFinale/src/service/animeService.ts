@@ -4,6 +4,7 @@ import { GenderDTO, IGenderDTO } from "../dto/genderDTO";
 import { IAnime } from "../model/anime.types";
 import { ListUtils } from "../utils/listUtils";
 import { Error } from "mongoose";
+import * as init_anim from "../data/insert.json";
 
 export class AnimeService {
 
@@ -50,6 +51,22 @@ export class AnimeService {
             await connectionToDb();
 
             const animeTocreate = await new Anime(input).save();
+
+            return await animeTocreate;
+        } catch (err) {
+            if (err instanceof Error) {
+                console.error(err.message);
+            }
+            throw new Error("");
+        }
+
+    }
+
+    public static async initAnim(): Promise<IAnime[]> {
+        try {
+            await connectionToDb();
+            const input_anim = init_anim;
+            const animeTocreate = await Anime.insertMany<IAnime>(input_anim as IAnime[]);
 
             return await animeTocreate;
         } catch (err) {
